@@ -1,5 +1,3 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
 
-[deploy]
-startCommand = "uv run runner.py"

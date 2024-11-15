@@ -2,8 +2,11 @@ from aiogram import Router
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, ReplyKeyboardMarkup
 
+from app.settings import get_settings
+
 
 router = Router()
+
 
 @router.message(CommandStart())
 async def start(msg: Message):
@@ -39,3 +42,11 @@ async def user_info(msg: Message):
 @router.message(Command("statistics"))
 async def statistics(msg: Message):
     await msg.answer(f"Statistics: {msg.from_user.model_dump_json()}")
+
+
+@router.message(Command("my_admin"))
+async def my_admin(msg: Message):
+    if msg.from_user.id != get_settings().owner_id:
+        return await msg.answer("You are not admin")
+
+    await msg.answer("setup...")
